@@ -1,0 +1,59 @@
+Le Dataset étant fait à partir de catégorie, avec moins de 100k données,
+un arbre de décision m'a paru être un modèle pertinent.
+
+La méthode fit() n'acceptant pas les caractères,
+j'ai utilisé la classe OneHotEncoder() pour transformer les caractères en int.
+
+le problème de cette classe est que le model fournit est encodé aussi,
+il faut donc garder l'accès à l'encodeur et le fichier trains.csv pour décodé les prédictions.
+Cela peut poser problème si on veut récupérer le modèle pour un autre projet.
+
+pour tester la fiabilité de mon modèle j'ai utilisé train_test_split() ainsi que accuracy_score(),
+pour un test de 10% des données j'ai obtenue un score de 100% de précision.
+avec 20% le score est de 98%.
+
+Pour identifier les variables pertinentes, l'encodage m'a bloqué, mais j'ai remarqué en visualisant l'arbre :
+la feature 27 est la racine de l'arbre et les features 23,102,21 et 90 sont les feuilles.
+
+Visualisation de l'arbre avec print(tree.export_text(model))
+
+|--- feature_27 <= 0.50
+|   |--- feature_53 <= 0.50
+|   |   |--- feature_63 <= 0.50
+|   |   |   |--- feature_22 <= 0.50
+|   |   |   |   |--- feature_25 <= 0.50
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- feature_25 >  0.50
+|   |   |   |   |   |--- class: 1
+|   |   |   |--- feature_22 >  0.50
+|   |   |   |   |--- class: 1
+|   |   |--- feature_63 >  0.50
+|   |   |   |--- class: 1
+|   |--- feature_53 >  0.50
+|   |   |--- feature_88 <= 0.50
+|   |   |   |--- class: 0
+|   |   |--- feature_88 >  0.50
+|   |   |   |--- class: 1
+|--- feature_27 >  0.50
+|   |--- feature_100 <= 0.50
+|   |   |--- feature_63 <= 0.50
+|   |   |   |--- feature_7 <= 0.50
+|   |   |   |   |--- feature_1 <= 0.50
+|   |   |   |   |   |--- feature_36 <= 0.50
+|   |   |   |   |   |   |--- class: 1
+|   |   |   |   |   |--- feature_36 >  0.50
+|   |   |   |   |   |   |--- feature_21 <= 0.50
+|   |   |   |   |   |   |   |--- class: 1
+|   |   |   |   |   |   |--- feature_21 >  0.50
+|   |   |   |   |   |   |   |--- class: 0
+|   |   |   |   |--- feature_1 >  0.50
+|   |   |   |   |   |--- class: 0
+|   |   |   |--- feature_7 >  0.50
+|   |   |   |   |--- class: 0
+|   |   |--- feature_63 >  0.50
+|   |   |   |--- feature_88 <= 0.50
+|   |   |   |   |--- class: 1
+|   |   |   |--- feature_88 >  0.50
+|   |   |   |   |--- class: 0
+|   |--- feature_100 >  0.50
+|   |   |--- class: 0
